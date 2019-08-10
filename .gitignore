@@ -1,0 +1,31 @@
+# Directories #
+build/**
+.gradle
+.idea
+target
+.vscode
+data/**
+
+*.class
+
+# Package Files #
+*.jar
+*.war
+*.ear
+*.iml
+*.ipr
+*.iws
+
+.classpath
+.project
+.settings
+
+db-file
+build
+bin
+
+classes/
+out/
+
+.DS_Store
+gradle/wrapper/
