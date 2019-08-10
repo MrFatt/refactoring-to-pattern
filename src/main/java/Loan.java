@@ -1,6 +1,5 @@
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
@@ -9,18 +8,18 @@ import static java.time.temporal.ChronoUnit.DAYS;
 public class Loan {
 
 
-    private LocalDate expiry; //过期
-    private LocalDate maturity; //到期
-    private double commitment; //承诺费
-    private double outstanding; //未偿
-    private List<Payment> payments;
-    private LocalDate today;
-    private LocalDate start;
+    LocalDate expiry; //过期
+    LocalDate maturity; //到期
+    double commitment; //承诺费
+    double outstanding; //未偿
+    List<Payment> payments;
+    LocalDate today;
+    LocalDate start;
 
     private long MILLIS_PER_DAY = 86400000;
     private long DAYS_PER_YEAR = 365;
-    private double riskRating;
-    private double unusedPercentage;
+    double riskRating;
+    double unusedPercentage;
 
     public Loan(LocalDate expiry, LocalDate maturity, double commitment, LocalDate start, double riskRating) {
         this.expiry = expiry;
@@ -63,19 +62,7 @@ public class Loan {
 
     // 资本
     public double capital() {
-        if (expiry == null && maturity != null)
-            //for newTermLoan
-            return commitment * duration() * riskFactor();
-        if (expiry != null && maturity == null) {
-            if (getUnusedPercentage() != 1.0)
-                //for newAdvisedLine
-                return commitment * getUnusedPercentage() * duration() * riskFactor();
-            else
-                //for newRevolver
-                return (outstandingRiskAmount() * duration() * riskFactor())
-                        + (unusedRiskAmount() * duration() * unusedRiskFactor());
-        }
-        return 0.0;
+        return new CapitalStrategy().capital(this);
     }
 
 
@@ -89,12 +76,12 @@ public class Loan {
     }
 
 
-    private double outstandingRiskAmount() {
+    double outstandingRiskAmount() {
         return outstanding;
     }
 
 
-    private double unusedRiskAmount() {
+    double unusedRiskAmount() {
         return (commitment - outstanding);
     }
 
