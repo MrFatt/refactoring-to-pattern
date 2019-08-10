@@ -39,16 +39,16 @@ public class Loan {
     }
 
     public static Loan newTermLoan(double commitment, LocalDate start, LocalDate maturity, int riskRating) {
-        return new Loan(null, maturity, commitment, start, riskRating, new CapitalStrategy());
+        return new Loan(null, maturity, commitment, start, riskRating, new CapitalStrategyTermLoan());
     }
 
     public static Loan newRevolver(double commitment, LocalDate start, LocalDate expiry, int riskRating) {
-        return new Loan(expiry, null, commitment, start, riskRating, new CapitalStrategy());
+        return new Loan(expiry, null, commitment, start, riskRating, new CapitalStrategyRevolver());
     }
 
     public static Loan newAdvisedLine(double commitment, LocalDate start, LocalDate expiry, int riskRating) {
         if (riskRating > 3) return null;
-        Loan advisedLine = new Loan(expiry, null, commitment, start, riskRating, new CapitalStrategy());
+        Loan advisedLine = new Loan(expiry, null, commitment, start, riskRating, new CapitalStrategyAdvisedLine());
         advisedLine.setUnusedPercentage(0.1);
         return advisedLine;
     }
