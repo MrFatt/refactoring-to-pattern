@@ -1,3 +1,5 @@
+package design.pattern.strategy.before;
+
 public class RiskFactor {
     private RiskFactor() {
     }

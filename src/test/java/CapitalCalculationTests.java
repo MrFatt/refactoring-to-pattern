@@ -1,3 +1,4 @@
+import design.pattern.strategy.before.Loan;
 import org.junit.Test;
 
 import java.time.LocalDate;
